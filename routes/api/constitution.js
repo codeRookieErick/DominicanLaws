@@ -9,6 +9,8 @@ let constitutionDatabases = {
 
 let router = require("express").Router();
 
+router.get("/", (req, res) => res.json("Ok"));
+
 ///Chapters router
 router.get("/:year/chapters/:chapterCode?", (req, res) => {
   let year = parseInt(req.params.year);
