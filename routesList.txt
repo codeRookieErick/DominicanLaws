@@ -1,0 +1,12 @@
+api/titles
+api/titles/:titleCode
+api/titles/:titleCode/chapters
+api/titles/:titleCode/articles
+api/chapters
+api/chapters/:chapterCode
+api/chapters/:chapterCode/sections
+api/chapters/:chapterCode/articles
+api/sections/
+api/sections/:sectionCode
+api/sections/:sectionCode/articles
+

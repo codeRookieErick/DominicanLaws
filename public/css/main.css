@@ -1,0 +1,31 @@
+body {
+  font-family: candara, "century gothic";
+}
+
+:root {
+  --main-link-background-color: #43f;
+  --main-link-text-color: #fff;
+  --hover-link-background-color: #fff;
+  --hover-link-text-color: #000;
+}
+
+nav,
+nav a {
+  background: var(--main-link-background-color, red);
+  padding: 0.5em 1em;
+}
+
+nav a {
+  margin: 0.25em;
+  color: var(--main-link-text-color, white);
+  text-decoration: none;
+  transition: 10ms;
+}
+
+/*Put a slash at the end of this line to turn on this*/
+nav a:hover {
+  background: var(--hover-link-background-color, red);
+  color: var(--hover-link-text-color, white);
+  text-decoration: none;
+}
+/**/

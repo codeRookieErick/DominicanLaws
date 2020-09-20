@@ -1,0 +1,25 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/css/bootstrap.css')
+    link(rel='stylesheet', href='/css/main.css')
+    script(src="/javascript/jquery-3.4.1.js")
+    script(src="/javascript/bootstrap.js")
+    script(src="/javascript/main.js")
+    block scripts
+    block styles
+  body
+    header
+      .header Constitución Dominicana
+    nav
+      a(href="javascript:showTitles();") Titulos
+      a(href="javascript:showChapters();") Capitulos
+      a(href="javascript:showSections();") Secciones
+      a(href="javascript:showArticles();") Articulos
+      input(type="text" id="searchBox")
+    .container
+      .row
+        div(class="col-12" id="subNav")
+        
+    block content

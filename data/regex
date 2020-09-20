@@ -1,0 +1,4 @@
+TITULO	TÍTULO [IVX]+
+CAPITULO	CAPÍTULO [IVX]+
+SECCION	SECCIÓN [IVX]+
+ARTICULO	Artículo [\d]+.-|Primera:|Segunda:|Tercera:|Cuarta:|Quinta:|Sexta:|Septima:|Octava:|Séptima:|Octava:|Novena:|D[eé]cim[\w]+?:|Vigésima:
