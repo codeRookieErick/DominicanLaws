@@ -9,7 +9,14 @@ let constitutionDatabases = {
 
 let router = require("express").Router();
 
-router.get("/", (req, res) => res.json("Ok"));
+router.get("/", (req, res) => {
+  let res = Object.keys(constitutionDatabases);
+  res.json(
+    res.map((y) => {
+      return y;
+    })
+  );
+});
 
 ///Chapters router
 router.get("/:year/chapters/:chapterCode?", (req, res) => {
