@@ -10,12 +10,7 @@ let constitutionDatabases = {
 let router = require("express").Router();
 
 router.get("/", (req, res) => {
-  let res = Object.keys(constitutionDatabases);
-  res.json(
-    res.map((y) => {
-      return y;
-    })
-  );
+  res.json(Object.keys(constitutionDatabases));
 });
 
 ///Chapters router
