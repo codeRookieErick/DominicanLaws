@@ -2,9 +2,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 
-let titlesApiRouter = require("./routes/api/titles");
-let chaptersApiRouter = require("./routes/api/chapters");
-let sectionsApiRouter = require("./routes/api/sections");
+let constitutionRouter = require("./routes/api/constitution");
 
 let indexRouter = require("./routes/views/index");
 
@@ -17,9 +15,7 @@ app.set("view engine", "pug");
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/api/titles", titlesApiRouter);
-app.use("/api/chapters", chaptersApiRouter);
-app.use("/api/sections", sectionsApiRouter);
+app.use("/api/constitution", constitutionRouter);
 
 app.use("/", indexRouter);
 app.use("/index", indexRouter);
