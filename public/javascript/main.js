@@ -1,12 +1,24 @@
-let apiRoot = "api";
+let apiRoot = "http://localhost:2020/api";
+
+let requestFromApi = (url, onSuccess, onError) => {
+  $.ajax({
+    url: `${apiRoot}/${url}`,
+    success: onSuccess,
+    error:
+      onError ||
+      ((e) => {
+        console.log(e);
+      }),
+  });
+};
 
 let tag = (name, content, attributes) => {
   attributes = attributes || {};
-  attributes = Object.keys(attributes).map((k) => ` ${k}=${attributes[k]}`);
+  attributes = Object.keys(attributes).map((k) => ` ${k}="${attributes[k]}"`);
   attributes = attributes.reduce((a, b) => `${a} ${b}`, "");
   return `<${name}${attributes}>${content}</${name}>`;
 };
-
+/*
 let setTitles = (titles) => {
   titles.forEach((t) => {
     console.log(t);
@@ -28,3 +40,4 @@ let showTitles = () => {
     },
   });
 };
+*/

@@ -10,7 +10,15 @@ let constitutionDatabases = {
 let router = require("express").Router();
 
 router.get("/", (req, res) => {
-  res.json(Object.keys(constitutionDatabases));
+  let years = Object.keys(constitutionDatabases);
+  years = years.map((y) => {
+    let result = {
+      year: y,
+      description: `Constitución del ${y}`,
+    };
+    return result;
+  });
+  res.json(years);
 });
 
 ///Chapters router
