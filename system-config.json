@@ -1,0 +1,21 @@
+{
+  "systemProcesses": [
+    {
+      "executableCode": "PYTHON",
+      "parameters": ["./bots/users-manager.py"],
+      "name": "Python worker"
+    },
+    {
+      "executableCode": "NODEJS",
+      "parameters": ["server.js"],
+      "name": "Node js server"
+    }
+  ],
+  "testProcesses": [
+    {
+      "executableCode": "PYTHON",
+      "parameters": ["./test/api-user-creation-test.py"],
+      "name": "Users creation test"
+    }
+  ]
+}

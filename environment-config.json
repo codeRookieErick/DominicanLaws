@@ -1,0 +1,7 @@
+{
+  "executables": {
+    "PYTHON": "py",
+    "NODEJS": "node"
+  },
+  "runTest": false
+}

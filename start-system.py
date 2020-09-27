@@ -1,6 +1,8 @@
 from threading import Lock, Thread
 from subprocess import Popen
+import json
 import os
+import sys
 
 
 class MyMultiProcess:
@@ -26,13 +28,63 @@ class MyMultiProcess:
         self.lock.release()
 
 
+class JsonConfig:
+    def __init__(self, name):
+        self.data = {}
+        self.name = name
+        self.path = f'{name}-config.json'
+        self.reload()
+
+    def reload(self):
+        with open(self.path, 'r') as f:
+            self.data = json.load(f)
+
+    def save(self):
+        with open(self.path, 'w') as f:
+            json.dump(self.data, f)
+
+    def __iter__(self):
+        for i in self.data:
+            yield i
+
+    def __str__(self):
+        return str(self.data)
+
+    def __getitem__(self, index):
+        return self.data[index]
+
+    def __setitem__(self, index, value):
+        self.data[index] = value
+
+
+systemConfig = JsonConfig('system')
+environment = JsonConfig('environment')
 manager = MyMultiProcess()
 
-manager.run(['node', 'server.js'], 'Nodejs server')
-manager.run(['py', './bots/users-manager.py'], 'Python worker')
+systemProcesses = systemConfig["systemProcesses"]
+testProcesses = systemConfig["testProcesses"]
+executables = environment["executables"]
+
+
+def run_processes_list(processesList):
+    global manager
+    global executables
+    for process in processesList:
+        if process["executableCode"] in executables:
+            arguments = [executables[process["executableCode"]]]
+            for arg in process["parameters"]:
+                arguments.append(arg)
+            manager.run(arguments, process["name"])
+
+
+run_processes_list(systemProcesses)
+if environment["runTest"]:
+    run_processes_list(testProcesses)
+
+# print(sys.argv)
 
 try:
-    while not input(f"Type 'exit' to end.{os.linesep}") == 'exit':
+    while not input(f"DOMINICAN LAWS SYSTEM{os.linesep}") == 'exit':
         pass
 except:
     manager.kill()

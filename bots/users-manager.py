@@ -8,7 +8,6 @@ from hashlib import md5
 dataFolderPath = 'data'
 maxSleepTimeSeg = 10.00
 heartBeatIntervalSeg = maxSleepTimeSeg / 1.00
-
 usersDatabasePath = os.sep.join([dataFolderPath, 'users.db'])
 xorEncriptionKeyPath = os.sep.join([dataFolderPath, 'xorEncriptionKey.txt'])
 
@@ -79,6 +78,7 @@ def delete_expired_creation_requests():
 
 
 def main_job():
+    global heartBeatIntervalSeg
     try:
         while True:
             data = []
