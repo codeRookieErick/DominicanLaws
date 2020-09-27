@@ -1,10 +1,11 @@
 import sqlite3
 import os
 import time
+import sys
 from uuid import uuid4
 from hashlib import md5
 
-dataFolderPath = '..\\data'
+dataFolderPath = 'data'
 heartBeatIntervalSeg = 4
 
 usersDatabasePath = os.sep.join([dataFolderPath, 'users.db'])
@@ -77,33 +78,39 @@ def delete_expired_creation_requests():
 
 
 def main_job():
-    while True:
-        data = []
-        with sqlite3.Connection(usersDatabasePath) as connection:
-            data = connection.execute(
-                "SELECT * FROM UserCreationRequests WHERE requestStatus = 1;"
-            ).fetchall()
-        print(f'{len(data)} user creation requests found.')
-        for creationRequest in data:
-            requestCode = creationRequest[1]
-            username = creationRequest[2]
-            email = creationRequest[3]
-            if len(get_user_by_username(username)) > 0:
-                print(
-                    f'USER_CREATION_FAIL: Username alredy taken "{username}"')
-                set_request_status(requestCode, 2)
-            elif len(get_user_by_email(email)) > 0:
-                print(f'USER_CREATION_FAIL: Email alredy taken "{email}"')
-                set_request_status(requestCode, 3)
-            else:
-                password = get_xor_key(creationRequest[4])
-                extra = get_random_extra().upper()
-                passwordHash = get_hash(password, extra)
-                save_user(username, email, passwordHash, extra, 3)
-                print(f'USER_CREATION_SUCCESS: "{username}"')
-                delete_creation_request(requestCode)
-        delete_expired_creation_requests()
-        time.sleep(heartBeatIntervalSeg)
+    try:
+        while True:
+            data = []
+            with sqlite3.Connection(usersDatabasePath) as connection:
+                data = connection.execute(
+                    "SELECT * FROM UserCreationRequests WHERE requestStatus = 1;"
+                ).fetchall()
+            if len(data) > 0:
+                print(f'{len(data)} user creation requests found.')
+            for creationRequest in data:
+                requestCode = creationRequest[1]
+                username = creationRequest[2]
+                email = creationRequest[3]
+                if len(get_user_by_username(username)) > 0:
+                    print(
+                        f'USER_CREATION_FAIL: Username alredy taken "{username}"')
+                    set_request_status(requestCode, 2)
+                elif len(get_user_by_email(email)) > 0:
+                    print(f'USER_CREATION_FAIL: Email alredy taken "{email}"')
+                    set_request_status(requestCode, 3)
+                else:
+                    password = get_xor_key(creationRequest[4])
+                    extra = get_random_extra().upper()
+                    passwordHash = get_hash(password, extra)
+                    save_user(username, email, passwordHash, extra, 3)
+                    print(f'USER_CREATION_SUCCESS: "{username}"')
+                    delete_creation_request(requestCode)
+            delete_expired_creation_requests()
+            time.sleep(heartBeatIntervalSeg)
+    except KeyboardInterrupt as e:
+        print("Users Manager Stopped by the user")
+    except:
+        print("Users Manager Stopped by unknown exception")
 
 
 main_job()
