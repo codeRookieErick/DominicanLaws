@@ -24,7 +24,7 @@
       "executableCode": "PYTHON",
       "parameters": ["./test/github-updater.py"],
       "name": "Update from github",
-      "disabled": false
+      "disabled": true
     }
   ]
 }

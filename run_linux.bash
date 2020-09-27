@@ -1,1 +1,1 @@
-py start-system.py
+python3 start-system.py

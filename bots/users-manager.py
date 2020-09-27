@@ -77,6 +77,34 @@ def delete_expired_creation_requests():
         )
 
 
+def delete_expired_tokens():
+    epoch = int(time.time())
+    with sqlite3.Connection(usersDatabasePath) as connection:
+        toDelete = connection.execute(
+            "SELECT COUNT(*) FROM Tokens WHERE expiration < ?;",
+            (epoch,)
+        ).fetchall()[0][0]
+        if toDelete > 0:
+            connection.execute(
+                "DELETE FROM Tokens WHERE expiration < ?;",
+                (epoch,)
+            )
+            print(f'{toDelete} expired token(s) removed.')
+
+
+def delete_exceded_tokens():
+    with sqlite3.Connection(usersDatabasePath) as connection:
+        toDelete = connection.execute(
+            "SELECT COUNT(*)  FROM VW_Tokens WHERE ordenToken > maxTokenCount;"
+        ).fetchall()[0][0]
+        if toDelete > 0:
+            connection.execute(
+                "DELETE FROM Tokens WHERE id in" +
+                "(SELECT id from VW_Tokens WHERE ordenToken > maxTokenCount);"
+            )
+            print(f'{toDelete} exceded token(s) removed.')
+
+
 def main_job():
     global heartBeatIntervalSeg
     try:
@@ -113,6 +141,8 @@ def main_job():
                     print(f'USER_CREATION_SUCCESS: "{username}"')
                     set_request_status(requestCode, 10)
             delete_expired_creation_requests()
+            delete_expired_tokens()
+            delete_exceded_tokens()
             time.sleep(heartBeatIntervalSeg)
     except KeyboardInterrupt as e:
         print("Users Manager Stopped by the user")
