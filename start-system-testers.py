@@ -28,8 +28,7 @@ class MyMultiProcess:
 
 manager = MyMultiProcess()
 
-manager.run(['node', 'server.js'], 'Nodejs server')
-manager.run(['py', './bots/users-manager.py'], 'Python worker')
+manager.run(['py', './test/api-user-creation-test.py'], 'Users creation test')
 
 try:
     while not input(f"Type 'exit' to end.{os.linesep}") == 'exit':

@@ -6,7 +6,8 @@ from uuid import uuid4
 from hashlib import md5
 
 dataFolderPath = 'data'
-heartBeatIntervalSeg = 4
+maxSleepTimeSeg = 10.00
+heartBeatIntervalSeg = maxSleepTimeSeg / 1.00
 
 usersDatabasePath = os.sep.join([dataFolderPath, 'users.db'])
 xorEncriptionKeyPath = os.sep.join([dataFolderPath, 'xorEncriptionKey.txt'])
@@ -86,7 +87,13 @@ def main_job():
                     "SELECT * FROM UserCreationRequests WHERE requestStatus = 1;"
                 ).fetchall()
             if len(data) > 0:
+                heartBeatIntervalSeg = maxSleepTimeSeg / len(data)
                 print(f'{len(data)} user creation requests found.')
+                print(f'Set sleep interval to {heartBeatIntervalSeg} seconds.')
+            elif heartBeatIntervalSeg != maxSleepTimeSeg:
+                heartBeatIntervalSeg = maxSleepTimeSeg
+                print(
+                    f'Set sleep interval to {heartBeatIntervalSeg} seconds. [IDLE]')
             for creationRequest in data:
                 requestCode = creationRequest[1]
                 username = creationRequest[2]
@@ -109,8 +116,8 @@ def main_job():
             time.sleep(heartBeatIntervalSeg)
     except KeyboardInterrupt as e:
         print("Users Manager Stopped by the user")
-    except:
-        print("Users Manager Stopped by unknown exception")
+    except Exception as e:
+        print(e)
 
 
 main_job()
