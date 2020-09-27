@@ -18,7 +18,7 @@
       "executableCode": "PYTHON",
       "parameters": ["./test/api-user-creation-test.py"],
       "name": "Users creation test",
-      "disabled": true
+      "disabled": false
     },
     {
       "executableCode": "PYTHON",
