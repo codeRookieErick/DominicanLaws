@@ -1,7 +1,7 @@
 {
   "executables": {
     "PYTHON": "python3",
-    "NODEJS": "node"
+    "NODEJS": "nodemon"
   },
-  "runTest": false
+  "runTest": true
 }
