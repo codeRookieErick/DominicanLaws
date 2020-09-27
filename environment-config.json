@@ -1,8 +1,0 @@
-{
-  "executables": {
-    "PYTHON": "py",
-    "NODEJS": "node"
-  },
-  "runTest": true,
-  "test": 3
-}
