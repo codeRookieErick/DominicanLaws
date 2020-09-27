@@ -3,19 +3,28 @@
     {
       "executableCode": "PYTHON",
       "parameters": ["./bots/users-manager.py"],
-      "name": "Python worker"
+      "name": "Python worker",
+      "disabled": false
     },
     {
       "executableCode": "NODEJS",
       "parameters": ["server.js"],
-      "name": "Node js server"
+      "name": "Node js server",
+      "disabled": false
     }
   ],
   "testProcesses": [
     {
       "executableCode": "PYTHON",
       "parameters": ["./test/api-user-creation-test.py"],
-      "name": "Users creation test"
+      "name": "Users creation test",
+      "disabled": true
+    },
+    {
+      "executableCode": "PYTHON",
+      "parameters": ["./test/github-updater.py"],
+      "name": "Update from github",
+      "disabled": false
     }
   ]
 }

@@ -111,7 +111,7 @@ def main_job():
                     passwordHash = get_hash(password, extra)
                     save_user(username, email, passwordHash, extra, 3)
                     print(f'USER_CREATION_SUCCESS: "{username}"')
-                    delete_creation_request(requestCode)
+                    set_request_status(requestCode, 10)
             delete_expired_creation_requests()
             time.sleep(heartBeatIntervalSeg)
     except KeyboardInterrupt as e:

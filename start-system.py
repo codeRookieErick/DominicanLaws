@@ -74,6 +74,8 @@ def run_processes_list(processesList):
             arguments = [executables[process["executableCode"]]]
             for arg in process["parameters"]:
                 arguments.append(arg)
+            if process["disabled"]:
+                continue
             manager.run(arguments, process["name"])
 
 
