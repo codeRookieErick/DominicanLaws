@@ -1,30 +1,33 @@
-var express = require("express");
-var path = require("path");
-var cookieParser = require("cookie-parser");
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 
-let constitutionRouterApi = require("./routes/api/constitution");
-let indexRouter = require("./routes/views/index");
-let constitutionRouter = require("./routes/views/constitution");
+const hostWebsite = false;
+const hostApi = true;
 
 var app = express();
 
-// view engine setup
+// view engine, cookies, static files, body-parser
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
-
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(bodyParser.urlencoded());
 
-app.use("/api/constitution", constitutionRouterApi);
+if (hostWebsite) {
+  app.use("/constitution", require("./routes/views/constitution"));
+  app.use("/title", require("./routes/views/title"));
+}
 
-app.use("/", indexRouter);
-app.use("/index", indexRouter);
-app.use("/constitution", constitutionRouter);
-app.use("/title", require("./routes/views/title"));
+if (hostApi) {
+  app.use("/api/users", require("./routes/api/users"));
+  app.use("/api/constitution", require("./routes/api/constitution"));
+}
+
 // catch 404 and forward to error handler
 app.use(function (req, res) {
-  res.writeHead(404, { "Content-type": "text/plain" });
-  res.end("Not found");
+  res.json("Not found");
 });
 
 module.exports = app;

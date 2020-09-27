@@ -1,4 +1,7 @@
 let apiRoot = "http://localhost:2020/api";
+const constitutionsKey = "constitutions";
+const yearsKey = "year";
+const titlesKey = "titles";
 
 let requestFromApi = (url, onSuccess, onError) => {
   $.ajax({
@@ -18,26 +21,20 @@ let tag = (name, content, attributes) => {
   attributes = attributes.reduce((a, b) => `${a} ${b}`, "");
   return `<${name}${attributes}>${content}</${name}>`;
 };
-/*
-let setTitles = (titles) => {
-  titles.forEach((t) => {
-    console.log(t);
-    let control = tag("div", tag("strong", t.nombreTitulo) + t.textoTitulo, {
-      class: "alert-info",
-    });
-    $("#subNav").append(control);
-  });
-};
 
-let showTitles = () => {
-  $("#subNav").empty();
-  $.ajax(`${apiRoot}/titles`, {
-    success: (data) => {
-      setTitles(data);
-    },
-    error: () => {
-      alert("fail");
-    },
-  });
+let getTitles = (year, callback) => {
+  callback = callback || ((d) => console.log(d));
+  if (localStorage.getItem(constitutionsKey) == undefined)
+    localStorage.setItem(constitutionsKey, {});
+  let data = localStorage.getItem(constitutionsKey);
+  //console.log(data);
+  if (data[year]) {
+    callback(data[year]);
+  } else {
+    requestFromApi(`constitution/${year}/titles`, (result) => {
+      data[year] = result;
+      localStorage.setItem(constitutionsKey, result);
+      callback(result);
+    });
+  }
 };
-*/

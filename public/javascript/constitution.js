@@ -45,7 +45,7 @@ let setTitle = (data) => {
   $("#mainContent").append(`
         <div class="const-title-panel">
             <h5 class="const-title-panel-heading">
-                <a href="#">${data[0].nombreTitulo}</a>
+                <a href="../title/${currentYear}/${data[0].codigoTitulo}">${data[0].nombreTitulo}</a>
             </h5>
             <h6 class="const-title-panel-body">
                 ${data[0].textoTitulo}

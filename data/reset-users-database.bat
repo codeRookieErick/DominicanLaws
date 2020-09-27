@@ -1,0 +1,1 @@
+sqlite3 -init createUsersDatabase.sql users.db ".exit"

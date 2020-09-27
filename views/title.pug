@@ -5,6 +5,8 @@ block content
             #mainContent.col-12 #{titleCode}
 
 block scripts
-    let titleCode = #{titleCode};
-
-
+    script.
+        let titleCode = "#{titleCode}"; 
+    script.
+        let currentYear = "#{currentYear}";
+    script(src="/javascript/title.js")
