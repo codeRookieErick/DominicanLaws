@@ -3,5 +3,6 @@
     "PYTHON": "py",
     "NODEJS": "node"
   },
-  "runTest": true
+  "runTest": true,
+  "test": 3
 }
